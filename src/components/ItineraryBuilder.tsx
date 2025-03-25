@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useTrip } from "@/context/TripContext";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Hotel, MapPin, Utensils, Clock, Edit, Trash, Plus, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight, Hotel as HotelIcon, MapPin, Utensils, Clock, Edit, Trash, Plus, CalendarDays } from "lucide-react";
 import { Attraction, Hotel, ItineraryDay, ItineraryItem, Restaurant } from "@/types";
 
 export default function ItineraryBuilder() {
@@ -101,7 +101,7 @@ export default function ItineraryBuilder() {
     
     if (!data) return null;
     
-    const ItemIcon = item.type === "hotel" ? Hotel : item.type === "attraction" ? MapPin : Utensils;
+    const ItemIcon = item.type === "hotel" ? HotelIcon : item.type === "attraction" ? MapPin : Utensils;
     
     return (
       <div
