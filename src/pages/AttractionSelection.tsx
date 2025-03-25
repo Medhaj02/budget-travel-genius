@@ -1,6 +1,6 @@
 
 import Header from "@/components/Header";
-import AttractionSelection from "@/components/AttractionSelection";
+import AttractionSelection from "@/components/attractions";
 import TravelChatbot from "@/components/TravelChatbot";
 
 const AttractionSelectionPage = () => {
