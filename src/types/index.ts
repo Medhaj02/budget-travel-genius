@@ -11,31 +11,34 @@ export interface Hotel {
   id: string;
   name: string;
   image: string;
-  price: number;
+  price: number; // Price in Rupees
   rating: number;
   description: string;
   amenities: string[];
+  location?: string;
 }
 
 export interface Attraction {
   id: string;
   name: string;
   image: string;
-  price: number;
+  price: number; // Price in Rupees
   rating: number;
   description: string;
   category: string;
   timeRequired: string;
+  precautions?: string[]; // Added precautions
 }
 
 export interface Restaurant {
   id: string;
   name: string;
   image: string;
-  price: number;
+  price: number; // Price in Rupees
   rating: number;
   description: string;
   cuisine: string;
+  location?: string;
 }
 
 export interface ItineraryItem {
@@ -59,4 +62,17 @@ export interface Itinerary {
   hotel?: Hotel;
   days: ItineraryDay[];
   totalCost: number;
+}
+
+export interface WeatherInfo {
+  temperature: number;
+  condition: string;
+  icon: string;
+}
+
+export interface TravelAdvice {
+  clothing: string[];
+  transportation: string[];
+  weather?: WeatherInfo;
+  localTips: string[];
 }

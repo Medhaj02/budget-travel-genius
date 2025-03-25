@@ -3,8 +3,9 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { useTrip } from "@/context/TripContext";
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Hotel as HotelIcon, MapPin, Utensils, Clock, Edit, Trash, Plus, CalendarDays } from "lucide-react";
+import { ArrowLeft, ArrowRight, Hotel as HotelIcon, MapPin, Utensils, Clock, Edit, Trash, Plus, CalendarDays, IndianRupee } from "lucide-react";
 import { Attraction, Hotel, ItineraryDay, ItineraryItem, Restaurant } from "@/types";
+import TravelChatbot from "./TravelChatbot";
 
 export default function ItineraryBuilder() {
   const {
@@ -126,8 +127,9 @@ export default function ItineraryBuilder() {
               </div>
               
               {item.type !== "hotel" && (
-                <div className="text-sm font-medium">
-                  ${(data as any).price}
+                <div className="text-sm font-medium flex items-center">
+                  <IndianRupee className="h-3 w-3 mr-1" />
+                  {(data as any).price}
                 </div>
               )}
             </div>
@@ -136,6 +138,20 @@ export default function ItineraryBuilder() {
               <div className="mt-2 flex items-center text-xs text-muted-foreground">
                 <Clock className="h-3 w-3 mr-1" />
                 {item.time}
+              </div>
+            )}
+            
+            {item.type === "attraction" && (data as Attraction).precautions && (data as Attraction).precautions!.length > 0 && (
+              <div className="mt-2 p-2 bg-amber-50 dark:bg-amber-950/30 rounded text-xs text-amber-700 dark:text-amber-400">
+                <p className="font-medium">Precautions:</p>
+                <ul className="list-disc pl-4 mt-1 space-y-1">
+                  {(data as Attraction).precautions!.slice(0, 1).map((precaution, index) => (
+                    <li key={index}>{precaution}</li>
+                  ))}
+                  {(data as Attraction).precautions!.length > 1 && (
+                    <li>+{(data as Attraction).precautions!.length - 1} more</li>
+                  )}
+                </ul>
               </div>
             )}
           </div>
@@ -203,7 +219,9 @@ export default function ItineraryBuilder() {
                           {dayItems
                             .filter((item) => {
                               if (slot === "Morning" && item.type === "hotel") return true;
-                              if (slot === "Afternoon" && item.type === "attraction") return true;
+                              if (slot === "Morning" && item.type === "attraction" && dayItems.filter(i => i.type === "attraction").indexOf(item) < 2) return true;
+                              if (slot === "Afternoon" && item.type === "attraction" && dayItems.filter(i => i.type === "attraction").indexOf(item) >= 2 && dayItems.filter(i => i.type === "attraction").indexOf(item) < 4) return true;
+                              if (slot === "Evening" && item.type === "attraction" && dayItems.filter(i => i.type === "attraction").indexOf(item) >= 4) return true;
                               if (slot === "Evening" && item.type === "restaurant") return true;
                               return false;
                             })
@@ -258,7 +276,10 @@ export default function ItineraryBuilder() {
                   
                   <div>
                     <p className="text-sm text-muted-foreground">Total Cost</p>
-                    <p className="font-medium">${itinerary.totalCost}</p>
+                    <p className="font-medium flex items-center">
+                      <IndianRupee className="h-4 w-4 mr-1" />
+                      {itinerary.totalCost.toLocaleString('en-IN')}
+                    </p>
                   </div>
                 </div>
                 
@@ -273,6 +294,8 @@ export default function ItineraryBuilder() {
           </div>
         </div>
       </div>
+      
+      <TravelChatbot />
     </div>
   );
 }

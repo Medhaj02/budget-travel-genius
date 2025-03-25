@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { useTrip } from "@/context/TripContext";
-import { DollarSign } from "lucide-react";
+import { IndianRupee } from "lucide-react";
 
 export default function BudgetInput() {
   const { setTripConfig, setCurrentStep } = useTrip();
@@ -21,8 +21,8 @@ export default function BudgetInput() {
       return;
     }
     
-    if (budgetValue < 100) {
-      setError("Budget must be at least $100");
+    if (budgetValue < 5000) {
+      setError("Budget must be at least ₹5,000");
       return;
     }
     
@@ -43,13 +43,13 @@ export default function BudgetInput() {
       <div className="glass dark:glass-dark rounded-2xl p-8 shadow-lg animate-scale-in">
         <h2 className="text-2xl font-semibold mb-4 text-center">What's your budget?</h2>
         <p className="text-muted-foreground mb-6 text-center">
-          Let's start planning your trip based on your budget.
+          Let's start planning your trip to India based on your budget.
         </p>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-              <DollarSign className="h-5 w-5 text-gray-400" />
+              <IndianRupee className="h-5 w-5 text-gray-400" />
             </div>
             <input
               type="number"
@@ -59,8 +59,8 @@ export default function BudgetInput() {
                 setError("");
               }}
               className="pl-10 w-full h-14 rounded-lg border border-input bg-background px-3 py-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 text-lg"
-              placeholder="Enter your budget"
-              min="100"
+              placeholder="Enter your budget in rupees"
+              min="5000"
             />
           </div>
           

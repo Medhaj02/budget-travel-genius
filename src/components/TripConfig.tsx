@@ -22,10 +22,18 @@ export default function TripConfig() {
 
   const tripTypes = [
     { value: "leisure", label: "Leisure" },
-    { value: "business", label: "Business" },
-    { value: "family", label: "Family" },
     { value: "adventure", label: "Adventure" },
+    { value: "pilgrimage", label: "Pilgrimage" },
+    { value: "wildlife", label: "Wildlife" },
+    { value: "historical", label: "Historical" },
     { value: "romantic", label: "Romantic" },
+    { value: "family", label: "Family" },
+  ];
+  
+  const popularDestinations = [
+    "Goa", "Jaipur", "Varanasi", "Delhi", "Mumbai", "Agra", 
+    "Udaipur", "Rishikesh", "Manali", "Darjeeling", "Shimla", 
+    "Kerala", "Leh Ladakh", "Coorg", "Amritsar"
   ];
 
   const handleChange = (
@@ -87,7 +95,7 @@ export default function TripConfig() {
       <div className="glass dark:glass-dark rounded-2xl p-8 shadow-lg animate-scale-in">
         <h2 className="text-2xl font-semibold mb-4">Trip Details</h2>
         <p className="text-muted-foreground mb-6">
-          Tell us more about your trip so we can plan the perfect itinerary.
+          Tell us more about your trip to India so we can plan the perfect itinerary.
         </p>
         
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -152,16 +160,22 @@ export default function TripConfig() {
             <div>
               <label className="block text-sm font-medium mb-2 flex items-center gap-2">
                 <MapPin size={16} />
-                Destination
+                Destination in India
               </label>
               <input
+                list="indian-destinations"
                 type="text"
                 name="destination"
                 value={formData.destination}
                 onChange={handleChange}
                 className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                placeholder="e.g. Paris, France"
+                placeholder="e.g. Goa, Jaipur, Delhi"
               />
+              <datalist id="indian-destinations">
+                {popularDestinations.map((dest) => (
+                  <option key={dest} value={dest} />
+                ))}
+              </datalist>
               {errors.destination && (
                 <p className="text-sm text-destructive mt-1">{errors.destination}</p>
               )}
